@@ -25,3 +25,9 @@ class Presupuesto(db.Model):
     fecha = db.Column(db.DateTime, default=datetime.utcnow)
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
     abertura_id = db.Column(db.Integer, db.ForeignKey('aberturas.id'), nullable=True)
+
+    class Abertura(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    precio_m2 = db.Column(db.Float, nullable=False)
+    imagen_url = db.Column(db.String(500), nullable=True)
