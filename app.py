@@ -225,12 +225,11 @@ def aberturas():
     lista_aberturas = Abertura.query.all()
     return render_template('aberturas.html', aberturas=lista_aberturas)
         
-
 @app.route('/abertura/eliminar/<int:id>')
 def eliminar_abertura(id):
     abertura = Abertura.query.get_or_404(id)
     db.session.delete(abertura)
     db.session.commit()
-    return redirect('/aberturas')
+    return redirect(url_for('aberturas'))
 if __name__ == '__main__':
     app.run(debug=True)
