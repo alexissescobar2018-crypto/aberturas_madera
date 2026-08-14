@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-dark text-white py-3">
+        <div class="row align-items-center g-2">
+            <!-- Título -->
+            <div class="col-md-4">
+                <h4 class="mb-0">Historial de Presupuestos</h4>
+            </div>
+            <!-- Buscador -->
+            <div class="col-md-5">
+                <form method="GET" action="/presupuestos" class="d-flex">
+                    <input type="text" name="buscar" class="form-control form-control-sm me-2" placeholder="🔍 Buscar por cliente..." value="{{ buscar }}">
+                    <button type="submit" class="btn btn-sm btn-outline-light">Buscar</button>
+                    {% if buscar %}
+                        <a href="/presupuestos" class="btn btn-sm btn-outline-secondary ms-1">Limpiar</a>
+                    {% endif %}
+                </form>
+            </div>
+            <!-- Botón Nuevo -->
+            <div class="col-md-3 text-end">
+                <a href="/nuevo_presupuesto" class="btn btn-sm btn-success">+ Nuevo Presupuesto</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0 align-middle text-center small">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Medidas (Ancho x Alto)</th>
+                        <th>Precio/m²</th>
+                        <th>Total ($)</th>
+                        <th>Fecha</th>
+                        <th style="width: 140px;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in presupuestos %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td class="fw-bold">{{ p.cliente.nombre }}</td>
+                        <td>{{ p.ancho }} cm x {{ p.alto }} cm</td>
+                        <td>${{ "{:,.2f}".format(p.precio_m2) }}</td>
+                        <td class="fw-bold text-success">${{ "{:,.2f}".format(p.total) }}</td>
+                        <td>{{ p.fecha.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="/presupuesto/{{ p.id }}/pdf" class="btn btn-outline-danger" title="Descargar PDF">
+                                    📄 PDF
+                                </a>
+                                <a href="/presupuesto/eliminar/{{ p.id }}" class="btn btn-outline-secondary" onclick="return confirm('¿Seguro que deseas eliminar este presupuesto?')" title="Eliminar">
+                                    🗑️
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="py-4 text-muted">
+                            {% if buscar %}
+                                No se encontraron presupuestos para "{{ buscar }}".
+                            {% else %}
+                                No hay presupuestos registrados aún.
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de Aberturas</title>
+</head>
+<body>
+    <h1>Catálogo de Aberturas</h1>
+
+    <h2>Agregar Nueva Abertura</h2>
+    <form action="/catalogo" method="POST">
+        <label for="nombre">Nombre / Tipo de Abertura:</label><br>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Ventana Cedro 120x150" required><br><br>
+
+        <label for="precio_m2">Precio por m² ($):</label><br>
+        <input type="number" id="precio_m2" name="precio_m2" step="any" required><br><br>
+
+        <label for="imagen">Nombre de la imagen (ej: balcon_algarrobo.jpg):</label><br>
+        <input type="text" id="imagen" name="imagen" placeholder="balcon_algarrobo.jpg"><br><br>
+
+        <button type="submit">Guardar en Catálogo</button>
+    </form>
+
+    <hr>
+
+    <h2>Aberturas Registradas</h2>
+    {% if aberturas %}
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>ID</th>
+                    <th>Nombre / Modelo</th>
+                    <th>Precio por m²</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in aberturas %}
+                <tr>
+                    <td>
+                        {% if item.imagen %}
+                            <img src="{{ url_for('static', filename='img/' + item.imagen) }}" alt="{{ item.nombre }}" width="100">
+                        {% else %}
+                            Sin imagen
+                        {% endif %}
+                    </td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.nombre }}</td>
+                    <td>${{ item.precio_m2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay aberturas registradas aún en la base de datos.</p>
+    {% endif %}
+
+    <br><br>
+    <a href="/">Volver al Inicio</a> | <a href="/cotizador">Ir al Cotizador</a>
+</body>
+</html>

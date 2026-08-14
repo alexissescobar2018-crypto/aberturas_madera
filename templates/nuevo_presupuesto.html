@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Nuevo Presupuesto</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <!-- Cliente -->
+                    <div class="mb-3">
+                        <label class="form-label">Cliente</label>
+                        <select name="cliente_id" class="form-select" required>
+                            <option value="" disabled selected>-- Seleccionar Cliente --</option>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Seleccionar del Catálogo (Opcional) -->
+                    <div class="mb-3">
+                        <label class="form-label">Modelo del Catálogo (Opcional)</label>
+                        <select id="select_abertura" class="form-select" onchange="actualizarPrecio()">
+                            <option value="" selected>-- Personalizado / Ninguno --</option>
+                            {% for a in aberturas %}
+                                <option value="{{ a.precio_m2 }}">{{ a.nombre }} (${{ "{:,.2f}".format(a.precio_m2) }}/m²)</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Medidas -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ancho (cm)</label>
+                            <input type="number" step="0.1" name="ancho" class="form-control" placeholder="Ej: 100" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Alto (cm)</label>
+                            <input type="number" step="0.1" name="alto" class="form-control" placeholder="Ej: 200" required>
+                        </div>
+                    </div>
+
+                    <!-- Precio por m2 -->
+                    <div class="mb-3">
+                        <label class="form-label">Precio por m² ($)</label>
+                        <input type="number" step="0.01" id="precio_m2" name="precio_m2" class="form-control" placeholder="Ej: 125000" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Calcular y Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script para cargar el precio al seleccionar una abertura -->
+<script>
+function actualizarPrecio() {
+    var select = document.getElementById("select_abertura");
+    var precioInput = document.getElementById("precio_m2");
+    var precioSeleccionado = select.value;
+    
+    if (precioSeleccionado) {
+        precioInput.value = precioSeleccionado;
+    }
+}
+</script>
+{% endblock %}

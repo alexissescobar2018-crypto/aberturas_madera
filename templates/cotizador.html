@@ -1,0 +1,23 @@
+<h2>Cotizador de Aberturas</h2>
+
+<form method="POST">
+    <label>Ancho (cm):</label><br>
+    <input type="number" name="ancho" step="any" required><br><br>
+
+    <label>Alto (cm):</label><br>
+    <input type="number" name="alto" step="any" required><br><br>
+
+    <label>Precio por m² ($):</label><br>
+    <input type="number" name="precio_m2" step="any" required><br><br>
+
+    <button type="submit">Calcular Presupuesto</button>
+</form>
+
+{% if cotizacion is not none and cotizacion > 0 %}
+    <hr>
+    <h3>Resultado del Presupuesto:</h3>
+    <p><strong>Total Estimado:</strong> ${{ cotizacion }}</p>
+{% endif %}
+
+<br>
+<a href="/">Volver al Inicio</a>

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mb-4">
+    <h2>🪵 Panel de Control</h2>
+    <p class="text-muted">Resumen general del sistema de cotización y gestión.</p>
+</div>
+
+<!-- Tarjetas de Métricas -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title text-uppercase mb-1 small">Total Presupuestado</h6>
+                <h3 class="fw-bold mb-0">${{ "{:,.2f}".format(total_presupuestado) }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title text-uppercase mb-1 small">Presupuestos</h6>
+                <h3 class="fw-bold mb-0">{{ cant_presupuestos }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title text-uppercase mb-1 small">Clientes</h6>
+                <h3 class="fw-bold mb-0">{{ cant_clientes }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title text-uppercase mb-1 small">Aberturas en Catálogo</h6>
+                <h3 class="fw-bold mb-0">{{ cant_aberturas }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Últimos Presupuestos -->
+<div class="card shadow-sm">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+        <h5 class="mb-0">Últimos Presupuestos Creados</h5>
+        <a href="/presupuestos" class="btn btn-sm btn-outline-light">Ver Todos →</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0 align-middle text-center small">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Medidas (Ancho x Alto)</th>
+                        <th>Total ($)</th>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in presupuestos %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td class="fw-bold">{{ p.cliente.nombre }}</td>
+                        <td>{{ p.ancho }} cm x {{ p.alto }} cm</td>
+                        <td class="fw-bold text-success">${{ "{:,.2f}".format(p.total) }}</td>
+                        <td>{{ p.fecha.strftime('%d/%m/%Y') }}</td>
+                        <td>
+                            <a href="/presupuesto/{{ p.id }}/pdf" class="btn btn-sm btn-outline-danger" title="PDF">
+                                📄 PDF
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="py-3 text-muted">No hay presupuestos registrados aún.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
