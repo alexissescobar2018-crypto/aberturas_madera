@@ -211,11 +211,19 @@ def aberturas():
     if request.method == 'POST':
         nombre = request.form['nombre']
         precio_m2 = float(request.form['precio_m2'])
-        
-        nueva_abertura = Abertura(nombre=nombre, precio_m2=precio_m2)
+        imagen_url = request.form.get('imagen_url') # 👈 Captura el nuevo campo
+
+        nueva_abertura = Abertura(
+            nombre=nombre, 
+            precio_m2=precio_m2, 
+            imagen_url=imagen_url # 👈 Se guarda en la base de datos
+        )
         db.session.add(nueva_abertura)
         db.session.commit()
         return redirect('/aberturas')
+
+    lista_aberturas = Abertura.query.all()
+    return render_template('aberturas.html', aberturas=lista_aberturas)
         
     lista_aberturas = Abertura.query.all()
     return render_template('aberturas.html', aberturas=lista_aberturas)
