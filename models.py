@@ -1,11 +1,4 @@
 from database import db
-from datetime import datetime
-
-class Abertura(db.Model):
-    __tablename__ = 'aberturas'
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    precio_m2 = db.Column(db.Float, nullable=False)
 
 class Cliente(db.Model):
     __tablename__ = 'clientes'
@@ -13,7 +6,6 @@ class Cliente(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     telefono = db.Column(db.String(50), nullable=True)
     email = db.Column(db.String(100), nullable=True)
-    presupuestos = db.relationship('Presupuesto', backref='cliente', lazy=True)
 
 class Presupuesto(db.Model):
     __tablename__ = 'presupuestos'
@@ -22,8 +14,8 @@ class Presupuesto(db.Model):
     alto = db.Column(db.Float, nullable=False)
     precio_m2 = db.Column(db.Float, nullable=False)
     total = db.Column(db.Float, nullable=False)
-    fecha = db.Column(db.DateTime, default=datetime.utcnow)
-    cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
+    fecha = db.Column(db.String(50), nullable=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=True)
     abertura_id = db.Column(db.Integer, db.ForeignKey('aberturas.id'), nullable=True)
 
 class Abertura(db.Model):
