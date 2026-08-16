@@ -8,14 +8,17 @@ from sqlalchemy import func
 
 app = Flask(__name__)
 
-# Configuración de base de datos desde Render con corrección de URL
+# 1. Cargar primero la configuración de Config
+app.config.from_object(Config)
+
+# 2. Configurar la URL de PostgreSQL reconociendo la variable de Render
 db_url = os.getenv('DATABASE_URL', 'sqlite:///aberturas.db')
 if db_url and db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
 
+# 3. Aplicar los valores finales a la app
 app.config["SQLALCHEMY_DATABASE_URI"] = db_url
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config.from_object(Config)
 
 # Inicializar la base de datos
 db.init_app(app)
