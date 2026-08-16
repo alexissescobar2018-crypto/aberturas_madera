@@ -2,12 +2,19 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from database import db
 from config import Config
-from cotizador import calcular_presupuesto # <- desde "cotizador" solo importas la función
+from cotizador import calcular_presupuesto
 from models import Abertura, Cliente, Presupuesto
-from sqlalchemy import func # Asegurate de importar func si no esta arriba
+from sqlalchemy import func
+
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///aberturas.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False          
+
+# Configuración de base de datos desde Render con corrección de URL
+db_url = os.getenv('DATABASE_URL', 'sqlite:///aberturas.db')
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = db_url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config.from_object(Config)
 
 # Inicializar la base de datos
