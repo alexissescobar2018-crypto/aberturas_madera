@@ -26,7 +26,8 @@ class Presupuesto(db.Model):
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=False)
     abertura_id = db.Column(db.Integer, db.ForeignKey('aberturas.id'), nullable=True)
 
-    class Abertura(db.Model):
+class Abertura(db.Model):
+    __tablename__="aberturas"
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     precio_m2 = db.Column(db.Float, nullable=False)
