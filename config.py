@@ -1,3 +1,3 @@
 import os
-Class config:
+class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY") or "clave-secreta-de-prueba"
