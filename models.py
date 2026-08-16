@@ -17,6 +17,8 @@ class Presupuesto(db.Model):
     fecha = db.Column(db.String(50), nullable=True)
     cliente_id = db.Column(db.Integer, db.ForeignKey('clientes.id'), nullable=True)
     abertura_id = db.Column(db.Integer, db.ForeignKey('aberturas.id'), nullable=True)
+    cliente = db.relationship("cliente", backref="presupuestos")
+    abertura = db.relationship("abertura", backref="presupuestos")
 
 class Abertura(db.Model):
     __tablename__ = 'aberturas'
