@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from database import db
 from config import Config
-from models import db, Abertura
 from cotizador import calcular_presupuesto # <- desde "cotizador" solo importas la función
 from models import Abertura, Cliente, Presupuesto
 from sqlalchemy import func # Asegurate de importar func si no esta arriba
