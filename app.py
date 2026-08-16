@@ -25,6 +25,7 @@ db.init_app(app)
 
 # Crear las tablas en la base de datos si no existen
 with app.app_context():
+    db.drop_all()
     db.create_all()
 
 from sqlalchemy import func  # Asegúrate de importar func si no está arriba
