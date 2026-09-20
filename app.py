@@ -250,7 +250,7 @@ def eliminar_abertura(id):
 
 @app.route('/hacerme-admin/<username>')
 def hacerme_admin(username):
-    usuario = Usuario.query.filter_by(nombre_usuario=username).first()
+    usuario = Usuario.query.filter_by(nombre_usuario='alexis').first()
     if usuario:
         usuario.is_admin = True
         db.session.commit()
