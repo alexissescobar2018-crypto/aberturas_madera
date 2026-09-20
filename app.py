@@ -247,15 +247,15 @@ def eliminar_abertura(id):
     db.session.commit()
     return redirect(url_for('aberturas'))
 
-
 @app.route('/hacerme-admin/<username>')
 def hacerme_admin(username):
-    usuario = Usuario.query.filter_by(nombre_usuario='alexis').first()
+    usuario = usuario.query.filter_by(nombre_usuario=username).first()
     if usuario:
-        usuario.is_admin = True
+        usuario.is_admin = true
         db.session.commit()
         return f"¡Listo! El usuario {username} ahora es Administrador."
-     return "Usuario no encontrado", 404
+
+    return "Usuario no encontrado", 404
 
 if __name__ == '__main__':
     app.run(debug=True)
