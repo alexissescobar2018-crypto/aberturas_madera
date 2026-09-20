@@ -28,3 +28,11 @@ class Abertura(db.Model):
     nombre = db.Column(db.String(100), nullable=False)
     precio_m2 = db.Column(db.Float, nullable=False)
     imagen_url = db.Column(db.String(500), nullable=True)
+
+class Usuario(base_de_datos.Model):
+    __tablename__ = 'usuarios'
+    
+    id = base_de_datos.Column(base_de_datos.Integer, primary_key=True)
+    nombre_usuario = base_de_datos.Column(base_de_datos.String(50), unique=True, nullable=False)
+    contrasena = base_de_datos.Column(base_de_datos.String(255), nullable=False)
+    es_admin = base_de_datos.Column(base_de_datos.Boolean, default=False)  # True = Admin (Tú), False = Cliente/Visor
