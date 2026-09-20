@@ -29,10 +29,10 @@ class Abertura(db.Model):
     precio_m2 = db.Column(db.Float, nullable=False)
     imagen_url = db.Column(db.String(500), nullable=True)
 
-class Usuario(base_de_datos.Model):
+class Usuario(db.Model):
     __tablename__ = 'usuarios'
     
-    id = base_de_datos.Column(base_de_datos.Integer, primary_key=True)
-    nombre_usuario = base_de_datos.Column(base_de_datos.String(50), unique=True, nullable=False)
-    contrasena = base_de_datos.Column(base_de_datos.String(255), nullable=False)
-    es_admin = base_de_datos.Column(base_de_datos.Boolean, default=False)  # True = Admin (Tú), False = Cliente/Visor
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_usuario = db.Column(db.String(50), unique=True, nullable=False)
+    contrasena = db.Column(db.String(255), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)  # True = Admin (Tú), False = Cliente/Visor
