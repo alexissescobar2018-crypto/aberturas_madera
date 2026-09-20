@@ -99,14 +99,14 @@ def nuevo_presupuesto():
         if not current_user.is_admin:
             return "Acceso denegado. Solo el administrador puede realizar esta acción.", 403
             
-                cliente_id = int(request.form['cliente_id'])
-                ancho = float(request.form['ancho'])
-                alto = float(request.form['alto'])
-                precio_m2 = float(request.form['precio_m2'])
+        cliente_id = int(request.form['cliente_id'])
+        ancho = float(request.form['ancho'])
+        alto = float(request.form['alto'])
+        precio_m2 = float(request.form['precio_m2'])
         
-                # Área en m²: (Ancho cm / 100) * (Alto cm / 100)
-                area_m2 = (ancho / 100.0) * (alto / 100.0)
-                total = area_m2 * precio_m2
+        # Área en m²: (Ancho cm / 100) * (Alto cm / 100)
+        area_m2 = (ancho / 100.0) * (alto / 100.0)
+        total = area_m2 * precio_m2
         
         presupuesto = Presupuesto(
             cliente_id=cliente_id,
